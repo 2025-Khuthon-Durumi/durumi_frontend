@@ -1,6 +1,6 @@
 import {Avatar, Box, Card, Paper, Stack, styled, Typography, CircularProgress} from "@mui/material";
 import {Search as SearchIcon} from "@mui/icons-material";
-import healingFarmImage from "../assets/ChatGPT Image 2025년 5월 9일 오후 10_58_08 1.png";
+import healingFarmImage from "../assets/Image.png";
 import img from "../assets/img.png";
 import {SERVER_URL} from "../common/region.ts";
 import {useEffect, useState} from "react";
