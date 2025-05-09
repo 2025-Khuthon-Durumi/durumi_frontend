@@ -52,7 +52,7 @@ const SelectRegion = () => {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}
-                        elevation={1}
+                        elevation={0}
                     >
                         <Stack
                             direction="column"
@@ -108,8 +108,9 @@ const SelectRegion = () => {
                                 flexDirection: 'column',
                                 height: '80%',
                                 overflow: 'hidden',
+                                border: 0.1
                             }}
-                            elevation={1}
+                            elevation={0}
                         >
                             <Typography
                                 variant="h6"
@@ -188,8 +189,9 @@ const SelectRegion = () => {
                                 flexDirection: 'column',
                                 height: '80%',
                                 overflow: 'hidden',
+                                border: 0.1
                             }}
-                            elevation={1}
+                            elevation={0}
                         >
                             <Typography
                                 variant="h6"

@@ -49,7 +49,7 @@ const SelectedProgramType = () => {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}
-                        elevation={1}
+                        elevation={0}
                     >
                         <Stack
                             direction="column"

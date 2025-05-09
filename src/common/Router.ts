@@ -7,6 +7,7 @@ import SelectProgramType from "../ui/SelectProgramType.tsx";
 import SelectInstitution from "../ui/SelectInstitution.tsx";
 import SelectConsulting from "../ui/SelectConsulting.tsx";
 import ExpertRecommend from "../ui/ExpertRecommend.tsx";
+import ExpertDetail from "../ui/ExpertDetail.tsx";
 
 const Router = createBrowserRouter([
     {
@@ -35,6 +36,9 @@ const Router = createBrowserRouter([
             }, {
                 path: '/expertRecommend',
                 Component: ExpertRecommend
+            }, {
+                path: '/expertDetail',
+                Component: ExpertDetail
             }
         ]
     }

@@ -1,20 +1,21 @@
-import {Box, Card, CircularProgress, Paper, Stack, styled, Typography} from '@mui/material';
+import {Box, Card, CircularProgress, Stack, styled, Typography} from '@mui/material';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {SERVER_URL} from "../common/region.ts";
 import useSelectedStore from "../store/useSelectedStore";
+import {useNavigate} from "react-router";
 
 // 스타일링된 Paper 컴포넌트
-const StyledPaper = styled(Paper)(({theme}) => ({
+const StyledPaper = styled(Stack)(({theme}) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
 }));
 
-type expert = {
+export type expert = {
     id: number,
     image: string,
     job: string,
@@ -27,7 +28,7 @@ type expert = {
     phone: string
 }
 
-const ExpertCard = ({name, title, image, job, career, introduction}: expert) => (
+const ExpertCard = ({name, title, image, introduction}: expert) => (
     <Card sx={{width: '100%', minWidth: 280, maxWidth: 320, mx: 1, border: 0.5, height: '100%'}} elevation={2}>
         <Box sx={{p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <Box
@@ -48,13 +49,15 @@ const ExpertCard = ({name, title, image, job, career, introduction}: expert) => 
             <Typography variant="body2" color="text.secondary" sx={{mb: 1}}>
                 {title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-                직업: {job}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-                경력: {career}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{mt: 1, textAlign: 'center', overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}>
+            <Typography variant="body2" color="text.secondary" sx={{
+                mt: 1,
+                textAlign: 'center',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical'
+            }}>
                 {introduction}
             </Typography>
         </Box>
@@ -62,6 +65,8 @@ const ExpertCard = ({name, title, image, job, career, introduction}: expert) => 
 );
 
 const ExpertRecommend = () => {
+    const navigate = useNavigate();
+
     const [experts, setExperts] = useState<expert[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -82,7 +87,7 @@ const ExpertRecommend = () => {
                 setLoading(true);
                 // 선택한 데이터로 요청 파라미터 생성
                 const requestData = {
-                    region: selectedRegion + ' '+ selectedSubArea,
+                    region: selectedRegion + ' ' + selectedSubArea,
                     target: selectedProgramTarget,
                     category: selectedProgramType,
                     facilities: selectedInstitution,
@@ -90,7 +95,7 @@ const ExpertRecommend = () => {
                 };
 
                 // API 요청하기
-                const response = await axios.post<expert[]>(`${SERVER_URL}/expert/search/21`, requestData);
+                const response = await axios.post<expert[]>(`${SERVER_URL}/expert/search/4`, requestData);
                 console.log('추천 전문가 데이터:', response.data);
 
                 // 최대 4개의 전문가만 표시
@@ -102,10 +107,54 @@ const ExpertRecommend = () => {
                 setError('추천 전문가 데이터를 불러오는 중 오류가 발생했습니다.');
                 // 오류 발생 시 샘플 데이터 사용
                 setExperts([
-                    {id: 1, name: "김농장", title: "유기농 전문가", image: "", job: "농장 컨설턴트", career: "10년", region: "서울", price: 50000, introduction: "유기농 작물 재배 및 치유농업 전문가입니다.", phone: "010-0000-0000"},
-                    {id: 2, name: "이컨설턴트", title: "농장 설계 전문가", image: "", job: "농업 건축가", career: "15년", region: "경기", price: 70000, introduction: "치유농장 시설 설계 및 구축 전문가입니다.", phone: "010-0000-0000"},
-                    {id: 3, name: "박농업", title: "치유농업 전문가", image: "", job: "치유농업 강사", career: "7년", region: "인천", price: 60000, introduction: "다양한 치유 프로그램 개발 및 운영 경험이 있습니다.", phone: "010-0000-0000"},
-                    {id: 4, name: "정원예", title: "원예 치료사", image: "", job: "원예 치료사", career: "12년", region: "강원", price: 55000, introduction: "식물을 통한 정서 치료 프로그램을 운영합니다.", phone: "010-0000-0000"}
+                    {
+                        id: 1,
+                        name: "김농장",
+                        title: "유기농 전문가",
+                        image: "",
+                        job: "농장 컨설턴트",
+                        career: "10년",
+                        region: "서울",
+                        price: 50000,
+                        introduction: "유기농 작물 재배 및 치유농업 전문가입니다.",
+                        phone: "010-0000-0000"
+                    },
+                    {
+                        id: 2,
+                        name: "이컨설턴트",
+                        title: "농장 설계 전문가",
+                        image: "",
+                        job: "농업 건축가",
+                        career: "15년",
+                        region: "경기",
+                        price: 70000,
+                        introduction: "치유농장 시설 설계 및 구축 전문가입니다.",
+                        phone: "010-0000-0000"
+                    },
+                    {
+                        id: 3,
+                        name: "박농업",
+                        title: "치유농업 전문가",
+                        image: "",
+                        job: "치유농업 강사",
+                        career: "7년",
+                        region: "인천",
+                        price: 60000,
+                        introduction: "다양한 치유 프로그램 개발 및 운영 경험이 있습니다.",
+                        phone: "010-0000-0000"
+                    },
+                    {
+                        id: 4,
+                        name: "정원예",
+                        title: "원예 치료사",
+                        image: "",
+                        job: "원예 치료사",
+                        career: "12년",
+                        region: "강원",
+                        price: 55000,
+                        introduction: "식물을 통한 정서 치료 프로그램을 운영합니다.",
+                        phone: "010-0000-0000"
+                    }
                 ]);
             } finally {
                 setLoading(false);
@@ -113,32 +162,54 @@ const ExpertRecommend = () => {
         };
 
         fetchRecommendedExperts();
-    }, [selectedRegion, selectedProgramTarget, selectedProgramType, selectedInstitution, selectedConsulting]);
+    }, [selectedRegion, selectedProgramTarget, selectedProgramType, selectedInstitution, selectedConsulting, selectedSubArea]);
+
+    const {setSelectedExpertId} = useSelectedStore();
 
     return (
-        <Box sx={{ width: '80%', margin: '40px auto' }}>
+        <Box sx={{width: '80%', margin: '40px auto'}}>
             <Typography variant="h5" component="h2" gutterBottom>
                 결과가 나왔어요!
             </Typography>
-            <Typography variant="h4" component="h3" gutterBottom sx={{ mb: 4 }}>
+            <Typography variant="h4" component="h3" gutterBottom sx={{mb: 4}}>
                 나에게 맞는 전문가는..
             </Typography>
 
             {/* 중간 섹션 - 추천 전문가 카드 */}
-            <StyledPaper sx={{ mb: 4 }} elevation={0}>
+            <StyledPaper sx={{mb: 4}} elevation={0}>
                 {loading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
-                        <CircularProgress />
+                    <Box sx={{display: 'flex', justifyContent: 'center', p: 3}}>
+                        <CircularProgress/>
                     </Box>
                 ) : error ? (
-                    <Typography color="error" sx={{ textAlign: 'center' }}>
+                    <Typography color="error" sx={{textAlign: 'center'}}>
                         {error}
                     </Typography>
                 ) : (
-                    <Stack spacing={3} sx={{ width: '100%' }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 3 }}>
+                    <Stack spacing={3} sx={{width: '100%'}}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-start',
+                                flexWrap: 'nowrap',  // 줄바꿈 방지
+                                overflowX: 'auto',   // 가로 스크롤 추가
+                                gap: 3,              // 간격 조정
+                                pb: 1.5               // 스크롤바 공간 확보
+                            }}
+                        >
                             {experts.map(expert => (
-                                <Box key={expert.id} sx={{ width: '22%', minWidth: 280 }}>
+                                <Box
+                                    key={expert.id}
+                                    onClick={() => {
+                                        setSelectedExpertId(expert.id);
+                                        navigate("/expertDetail")
+                                    }}
+                                    sx={{
+                                        width: '25%',   // 너비 조정 (4개에 맞게)
+                                        minWidth: '300px',  // 최소 너비 조정
+                                        flexShrink: 0    // 축소 방지
+                                    }}
+                                >
                                     <ExpertCard {...expert} />
                                 </Box>
                             ))}

@@ -28,6 +28,7 @@ const SelectedInfo = ({paperProps = {}}: SelectedInfoProps) => {
     return (
         <Paper
             sx={{
+                border:0.1,
                 flex: 2,
                 p: 3,
                 m: 1,
@@ -36,7 +37,7 @@ const SelectedInfo = ({paperProps = {}}: SelectedInfoProps) => {
                 flexDirection: 'column',
                 ...paperProps
             }}
-            elevation={1}
+            elevation={0}
         >
             <Typography variant="h6" sx={{fontWeight: 'bold', mb: 3, color: Theme.palette.primary.main}}>
                 선택한 정보
